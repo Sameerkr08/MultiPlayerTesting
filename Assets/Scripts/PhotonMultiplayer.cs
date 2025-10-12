@@ -2,7 +2,7 @@ using UnityEngine;
 using Photon.Pun;
 using TMPro;
 using UnityEngine.UI;
-//test2
+//test2.........
 public class PhotonMultiplayer : MonoBehaviourPunCallbacks
 {
     [SerializeField] GameObject _connectingPanel, _roomPanel, _roomLobbyPanel;
