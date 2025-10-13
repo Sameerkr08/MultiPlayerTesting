@@ -2,6 +2,7 @@ using UnityEngine;
 using Photon.Pun;
 using TMPro;
 using UnityEngine.UI;
+using Photon.Realtime;
 
 public class PhotonMultiplayer : MonoBehaviourPunCallbacks
 {
@@ -22,16 +23,28 @@ public class PhotonMultiplayer : MonoBehaviourPunCallbacks
     
     void Update()
     {
-        if(PhotonNetwork.IsConnectedAndReady && !PhotonNetwork.InLobby)
+        //if(PhotonNetwork.IsConnectedAndReady && !PhotonNetwork.InLobby)
+        //{
+        //    _connectingPanel.SetActive(false);
+        //    if(!PhotonNetwork.InRoom)
+        //    {
+        //        _roomPanel.SetActive(true);
+        //    }
+        //    PhotonNetwork.JoinLobby();
+        //}
+        if (PhotonNetwork.NetworkClientState == ClientState.ConnectedToMasterServer && !PhotonNetwork.InLobby)
         {
             _connectingPanel.SetActive(false);
-            if(!PhotonNetwork.InRoom)
+
+            if (!PhotonNetwork.InRoom)
             {
                 _roomPanel.SetActive(true);
             }
+
             PhotonNetwork.JoinLobby();
         }
-        
+
+
     }
 
     void JoinRoom()
