@@ -9,10 +9,11 @@ public class PhotonMultiplayer : MonoBehaviourPunCallbacks
     [SerializeField] TMP_InputField _roomIdInputF, _playerNameInputF;
     [SerializeField] Button _createBtn, _joinBtn, _gameStartBtn;
     [SerializeField] TMP_Text _roomCreaterName;
-    bool _connected;
+    //bool _connected;
     void Start()
     {
         PhotonNetwork.ConnectUsingSettings();
+        PhotonNetwork.AutomaticallySyncScene = true;
         _createBtn.onClick.AddListener(CreateRoom);
         _joinBtn.onClick.AddListener(JoinRoom);
         _gameStartBtn.onClick.AddListener(GameStart);
@@ -82,6 +83,10 @@ public class PhotonMultiplayer : MonoBehaviourPunCallbacks
 
     void GameStart()
     {
-        PhotonNetwork.LoadLevel(1);  //same as scenemanager.loadScene   but this for offline in unity 
+        if (PhotonNetwork.LocalPlayer.IsMasterClient)
+        {
+            PhotonNetwork.LoadLevel(1);  //same as scenemanager.loadScene   but this for offline in unity
+        }
+         
     }
 }
