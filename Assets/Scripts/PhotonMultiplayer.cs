@@ -3,13 +3,15 @@ using Photon.Pun;
 using TMPro;
 using UnityEngine.UI;
 using Photon.Realtime;
+using System.Collections.Generic;
 
 public class PhotonMultiplayer : MonoBehaviourPunCallbacks
 {
-    [SerializeField] GameObject _connectingPanel, _roomPanel, _roomLobbyPanel;
+    [SerializeField] GameObject _connectingPanel, _roomPanel, _roomLobbyPanel, _playerInRoomPrefab;
     [SerializeField] TMP_InputField _roomIdInputF, _playerNameInputF;
     [SerializeField] Button _createBtn, _joinBtn, _gameStartBtn;
     [SerializeField] TMP_Text _roomCreaterName;
+    [SerializeField] Transform _playerNameSpawnPosition;
     //bool _connected;
     void Start()
     {
@@ -63,6 +65,7 @@ public class PhotonMultiplayer : MonoBehaviourPunCallbacks
         _roomPanel.SetActive(false);
         _roomLobbyPanel.SetActive(true);
         _roomCreaterName.text = PhotonNetwork.CurrentRoom.Name + " created by " + PhotonNetwork.MasterClient.NickName;
+        PlayerListRefresh();
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
@@ -101,5 +104,32 @@ public class PhotonMultiplayer : MonoBehaviourPunCallbacks
             PhotonNetwork.LoadLevel(1);  //same as scenemanager.loadScene   but this for offline in unity
         }
          
+    }
+
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        base.OnPlayerEnteredRoom(newPlayer);
+        Invoke("PlayerListRefresh", 0.5f);
+    }
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        base.OnPlayerLeftRoom(otherPlayer);
+        PlayerListRefresh();
+    }
+
+    void PlayerListRefresh()
+    {
+        foreach (GameObject name in GameObject.FindGameObjectsWithTag("Name"))
+        {
+            Destroy(name);
+        }
+        Dictionary<int, Player> _player = PhotonNetwork.CurrentRoom.Players;
+        foreach (Player player in _player.Values)
+        {
+            GameObject _playerNameSpawn = Instantiate(_playerInRoomPrefab, _playerNameSpawnPosition);
+            _playerNameSpawn.name = player.UserId;
+            _playerNameSpawn.GetComponent<TMP_Text>().text = player.NickName;
+        }
     }
 }
