@@ -153,7 +153,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 134}
+  m_AnchoredPosition: {x: 0, y: 65}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &962767626
@@ -525,7 +525,6 @@ GameObject:
   - component: {fileID: 1501902661}
   - component: {fileID: 1501902660}
   - component: {fileID: 1501902659}
-  - component: {fileID: 1501902663}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -616,20 +615,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1501902663
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1501902658}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ea6701c4437eb04b9d88e9426f874a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _clientCube: {fileID: 3383467635908667921, guid: 5164bb25ba68ff34c8b06bbe409cd662, type: 3}
-  _roomCube: {fileID: 615004947543316802, guid: 133710adfde1572408038bd2c9b1571d, type: 3}
 --- !u!1 &1505952325
 GameObject:
   m_ObjectHideFlags: 0

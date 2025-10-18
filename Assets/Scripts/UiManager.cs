@@ -3,18 +3,27 @@ using Photon.Pun;
 
 public class UiManager : MonoBehaviourPunCallbacks
 {
-    [SerializeField] GameObject _clientCube;
-    [SerializeField] GameObject _roomCube;
+    [SerializeField] GameObject  _player;
+    GameObject _cube;
 
-    void Update()
+    private void Start()
     {
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            PhotonNetwork.Instantiate(_clientCube.name, _clientCube.transform.position, Quaternion.identity);
-        }
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            PhotonNetwork.InstantiateRoomObject(_roomCube.name, _roomCube.transform.position, Quaternion.identity);
-        }
+        PhotonNetwork.Instantiate(_player.name, _player.transform.position, Quaternion.identity);
     }
+
+    private void Update()
+    {
+        /*if (Input.GetKeyDown(KeyCode.C))
+        {
+            PhotonNetwork.Instantiate(_cube.name, _cube.transform.position, Quaternion.identity);
+        }
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            GameObject r = PhotonNetwork.InstantiateRoomObject(_cube.name, _cube.transform.position, Quaternion.identity);
+            r.transform.position = new Vector3(2f, 2f, 2f);
+        } */
+
+
+    }
+
 }
