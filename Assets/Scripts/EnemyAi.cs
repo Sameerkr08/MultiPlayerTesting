@@ -12,10 +12,13 @@ public class EnemyAi : MonoBehaviourPunCallbacks
     public float _health, _maxhealth = 100f;
     bool _trigger = false;
     Animator _animator;
+    //PhotonView _photonView;
 
     void Start()
     {
         _health = _maxhealth;
+        //_photonView = GetComponent<PhotonView>();
+        //_photonView.RPC("UpdateHealth", RpcTarget.AllBuffered, _health);
         _agent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
     }
@@ -32,7 +35,8 @@ public class EnemyAi : MonoBehaviourPunCallbacks
             }
             else if (Vector3.Distance(transform.position, _target.transform.position) <= _agent.stoppingDistance)
             {
-                Attack();
+                _animator.SetBool("Attack", true);
+                _animator.SetBool("Run", false);
                 _agent.velocity = Vector3.zero;
             }
             else if (Vector3.Distance(transform.position, _target.transform.position) <= _triggerRange || _trigger)
@@ -66,13 +70,19 @@ public class EnemyAi : MonoBehaviourPunCallbacks
     {
         _target = _player;
         _health -= 20;
+        photonView.RPC("UpdateHealth", RpcTarget.AllBuffered, _health);
         _trigger = true;
     }
 
     public void Attack()
     {
-        _animator.SetBool("Attack", true);
-        _animator.SetBool("Run", false);
+        
         _target.GetComponent<PlayerMovement>().GotHit();
+    }
+
+    [PunRPC]
+    void UpdateHealth(float newHealth)
+    {
+        _health = newHealth;
     }
 }
