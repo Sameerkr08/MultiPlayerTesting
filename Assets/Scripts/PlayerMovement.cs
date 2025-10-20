@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviourPunCallbacks
 {
-    [SerializeField] GameObject _orientation, _thirdPersonCamera, _firtPersonCamera;
+    [SerializeField] GameObject _orientation, _thirdPersonCamera, _firtPersonCamera, _gunModel;
     [SerializeField] Image _healthBar;
     AudioSource _audioSource;
     FixedJoystick _joystick;
@@ -177,6 +177,17 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
                 _thirdPersonCamera.SetActive(false);
             }
         }
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            if(_gunModel.activeSelf)
+            {
+                photonView.RPC("ObjectTurnOff", RpcTarget.AllBuffered, _gunModel.GetPhotonView().ViewID);
+            }
+            else
+            {
+                photonView.RPC("ObjectTurnOn", RpcTarget.AllBuffered, _gunModel.GetPhotonView().ViewID);
+            }
+        }
         //if (Input.GetKeyDown(KeyCode.Q))
         //{
         //    if(SceneManager.GetActiveScene().buildIndex < 2)
@@ -223,6 +234,21 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
         //{
         //    Debug.Log("mouse key Unclicked");
         //}
+    }
+
+    [PunRPC]
+    void ObjectTurnOff(int viewId)
+    {
+        PhotonView _photonView = PhotonView.Find(viewId);
+        _photonView.gameObject.SetActive(false);
+    }
+
+
+    [PunRPC]
+    void ObjectTurnOn(int viewId)
+    {
+        PhotonView _photonView = PhotonView.Find(viewId);
+        _photonView.gameObject.SetActive(true);
     }
     IEnumerator LoadingScreen(int _sceneIndex)
     {

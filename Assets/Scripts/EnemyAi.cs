@@ -74,6 +74,8 @@ public class EnemyAi : MonoBehaviourPunCallbacks
         _trigger = true;
     }
 
+    
+
     public void Attack()
     {
         
